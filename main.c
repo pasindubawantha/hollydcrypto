@@ -30,7 +30,7 @@ int main(int argc, char *argv[]) {
 	if (directory){
 		while ((dir = readdir(directory)) != NULL){
 			if(argv[1][0] == 'e'){
-				if(dir->d_name[0] != '.' && check_encrypt(dir->d_name)){
+				if(dir->d_name[0] != '.' && check_encrypt(dir->d_name) && dir->d_type != DT_DIR ){
 					printf("encypting : %s\n", dir->d_name);
 					if(my_encrypt(dir->d_name, password)){
 						printf("##### FAILED to encryp %s\n", dir->d_name);
@@ -38,7 +38,7 @@ int main(int argc, char *argv[]) {
 					}
 				}
 			}else if(argv[1][0] == 'd'){
-				if(check_decrypt(dir->d_name)){
+				if(check_decrypt(dir->d_name) && dir->d_type != DT_DIR ){
 					printf("decypting : %s\n", dir->d_name);
 					if(my_decrypt(dir->d_name, password)){
 						printf("##### FAILED to decrypt %s\n", dir->d_name);
